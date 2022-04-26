@@ -25,12 +25,18 @@ public class AddNumbersTest {
         assertEquals(3,sum("//;\n1;2"));
         assertEquals(3,sum("//=\n1=2"));
         assertEquals(12,sum("//\t\n1\t2,3\n6,\n"));
+        
+        assertEquals(9,sum("//\t\n1\t2,-3\n6,\n"));
+        assertEquals(76,sum("1\n2,-3\n6,-9,2,65\n-5\n-14\n"));
+        assertEquals(20,sum("//\t\n-1\t2,-3\n6,\n,-7\t12"));
     }
 
 	private static long sum(String numbers) {
+		
 		int sum = 0;
 		String delimiter = "";
 		String numArray[] = {};
+		
 		if (numbers.isBlank()) {
 			return sum;
 		}
@@ -50,8 +56,19 @@ public class AddNumbersTest {
 				continue;
 			}
 			long num = Long.parseLong(numArray[i].replaceAll("\\s", "").trim());
-			sum += num;
+			try {
+			if (num<0) {
+				throw new Exception("negatives not allowed: "+num);   
+			} else {
+				
+				sum += num;
+			}
+		} catch(Exception ex) {
+			System.err.println(ex.getMessage());
 		}
+			
+		}
+		
 		return sum;
 	}  
 }
