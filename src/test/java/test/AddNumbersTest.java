@@ -37,33 +37,36 @@ public class AddNumbersTest {
 		int sum = 0;
 		String delimiter = "";
 		String numArray[] = {};
-
+		
+		// Check if the number is empty or just with spaces
 		if (numbers.isBlank()) {
 			return sum;
 		}
+		// Check if there is any delimiter present at the beggining
 		if (numbers.startsWith("//")) {
 			String numArrayTemp[] = numbers.split("\n", 2);
 			delimiter = numArrayTemp[0].replace("//", "");
 			delimiter = "|" + delimiter;
 			numbers = numArrayTemp[1];
 		}
-		if (delimiter.isBlank()) {
-			numArray = numbers.split(",|\\n");
-		} else {
-			numArray = numbers.split(",|\\n" + delimiter);
-		}
+		
+		numArray = numbers.split(",|\\n" + delimiter);
+		
 		for (int i = 0; i < numArray.length; i++) {
 			if (numArray[i].isBlank()) {
 				continue;
 			}
+			
 			long num = Long.parseLong(numArray[i].replaceAll("\\s", "").trim());
+			
 			try {
+				
 				if (num < 0) {
 					throw new Exception("negatives not allowed: " + num);
 				} else {
-
 					sum += num;
 				}
+				
 			} catch (Exception ex) {
 				System.err.println(ex.getMessage());
 			}
