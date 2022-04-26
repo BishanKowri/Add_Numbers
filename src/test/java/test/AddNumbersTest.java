@@ -23,6 +23,8 @@ public class AddNumbersTest {
         assertEquals(1,sum("1,\n"));
         
         assertEquals(3,sum("//;\n1;2"));
+        assertEquals(3,sum("//=\n1=2"));
+        assertEquals(12,sum("//\t\n1\t2,3\n6,\n"));
     }
 
 	private static long sum(String numbers) {
