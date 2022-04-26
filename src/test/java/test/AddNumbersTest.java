@@ -21,14 +21,28 @@ public class AddNumbersTest {
         		+ "165,1,6,156,65,165,,230,23,023,23,23,23,23,0,23")); //Adds all Numbers
         assertEquals(50,sum("10\n 15,25")); //trims the space in between 
         assertEquals(1,sum("1,\n"));
+        
+        assertEquals(3,sum("//;\n1;2"));
     }
 
 	private static long sum(String numbers) {
 		int sum = 0;
+		String delimiter = "";
+		String numArray[] = {};
 		if (numbers.isBlank()) {
 			return sum;
 		}
-		String numArray[] = numbers.split(",|\\n");
+		if (numbers.startsWith("//")) {
+			String numArrayTemp[] = numbers.split("\n", 2);
+			delimiter = numArrayTemp[0].replace("//","");
+			delimiter = "|"+delimiter;
+			numbers = numArrayTemp[1];
+		} 
+		if (delimiter.isBlank()) {
+			numArray = numbers.split(",|\\n");
+		} else {
+			numArray = numbers.split(",|\\n"+delimiter);
+		}
 		for (int i=0;i<numArray.length;i++) {
 			if (numArray[i].isBlank()) {
 				continue;
